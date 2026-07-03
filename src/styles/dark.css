@@ -1,0 +1,31 @@
+body.dark-mode {
+  --dark: #f9fafb;
+  --light: #1f2937;
+  --gray: #9ca3af;
+  --gray-light: #374151;
+  --gray-dark: #e5e7eb;
+  --white: #111827;
+}
+
+body.dark-mode .card {
+  background-color: var(--white);
+  border: 1px solid var(--gray-light);
+}
+
+body.dark-mode .form-input,
+body.dark-mode .form-textarea,
+body.dark-mode .form-select {
+  background-color: var(--white);
+  color: var(--dark);
+  border-color: var(--gray-light);
+}
+
+body.dark-mode .btn-outline {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+body.dark-mode .btn-outline:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
