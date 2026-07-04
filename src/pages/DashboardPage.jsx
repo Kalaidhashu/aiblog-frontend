@@ -20,39 +20,76 @@ const DashboardPage = () => {
         totalComments: 0,
     });
 
-    // useEffect(() => {
-    //     fetchMyBlogs();
-    // }, []);
-    useEffect(() => {
-    if (user?._id) {
-        fetchMyBlogs();
-    }
-}, [fetchMyBlogs,user]);
+//     // useEffect(() => {
+//     //     fetchMyBlogs();
+//     // }, []);
+//     useEffect(() => {
+//     if (user?._id) {
+//         fetchMyBlogs();
+//     }
+// }, [fetchMyBlogs,user]);
 
 
 
-    const fetchMyBlogs = useCallback(async () => {
+//     const fetchMyBlogs = useCallback(async () => {
+//         try {
+//             const response = await axios.get(`${process.env.REACT_APP_API_URL}/blogs?author=${user._id}`);
+//             setMyBlogs(response.data.blogs);
+            
+//             // Calculate stats
+//             const views = response.data.blogs.reduce((sum, blog) => sum + (blog.views || 0), 0);
+//             const likes = response.data.blogs.reduce((sum, blog) => sum + (blog.likes?.length || 0), 0);
+            
+//             setStats({
+//                 totalBlogs: response.data.blogs.length,
+//                 totalViews: views,
+//                 totalLikes: likes,
+//                 totalComments: 0, // Would need to fetch comments count
+//             });
+//         } catch (error) {
+//             console.error('Failed to fetch blogs:', error);
+//             toast.error('Failed to load dashboard');
+//         } finally {
+//             setLoading(false);
+//         }
+//     }, [user]);
+useEffect(() => {
+    const fetchMyBlogs = async () => {
+        if (!user?._id) return;
+
         try {
-            const response = await axios.get(`${process.env.REACT_APP_API_URL}/blogs?author=${user._id}`);
+            const response = await axios.get(
+                `${process.env.REACT_APP_API_URL}/blogs?author=${user._id}`
+            );
+
             setMyBlogs(response.data.blogs);
-            
-            // Calculate stats
-            const views = response.data.blogs.reduce((sum, blog) => sum + (blog.views || 0), 0);
-            const likes = response.data.blogs.reduce((sum, blog) => sum + (blog.likes?.length || 0), 0);
-            
+
+            const views = response.data.blogs.reduce(
+                (sum, blog) => sum + (blog.views || 0),
+                0
+            );
+
+            const likes = response.data.blogs.reduce(
+                (sum, blog) => sum + (blog.likes?.length || 0),
+                0
+            );
+
             setStats({
                 totalBlogs: response.data.blogs.length,
                 totalViews: views,
                 totalLikes: likes,
-                totalComments: 0, // Would need to fetch comments count
+                totalComments: 0,
             });
         } catch (error) {
-            console.error('Failed to fetch blogs:', error);
-            toast.error('Failed to load dashboard');
+            console.error(error);
+            toast.error("Failed to load dashboard");
         } finally {
             setLoading(false);
         }
-    }, [user]);
+    };
+
+    fetchMyBlogs();
+}, [user]);
 
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this blog?')) {
