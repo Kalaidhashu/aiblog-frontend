@@ -7,7 +7,7 @@ import LoadingSpinner from '../components/common/LoadingSpinner';
 import { formatDistanceToNow } from 'date-fns';
 import { FiHeart, FiBookmark, FiEdit2, FiTrash2, FiArrowLeft } from 'react-icons/fi';
 import toast from 'react-hot-toast';
-import axios from 'axios';
+// import axios from 'axios';
 
 const BlogDetailsPage = () => {
     const { id } = useParams();

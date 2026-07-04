@@ -2,19 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useBlog } from '../context/BlogContext';
 import BlogCard from '../components/blog/BlogCard';
 import LoadingSpinner from '../components/common/LoadingSpinner';
-import { FiSearch, FiFilter } from 'react-icons/fi';
+import { FiSearch} from 'react-icons/fi';
 
 const ExplorePage = () => {
     const { blogs, loading, totalPages, currentPage, fetchBlogs } = useBlog();
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
-    const [showFilters, setShowFilters] = useState(false);
+    // const [showFilters, setShowFilters] = useState(false);
 
     const categories = ['All', 'Technology', 'Science', 'Health', 'Business', 'Education', 'Entertainment', 'Travel', 'Food', 'Other'];
 
     useEffect(() => {
         fetchBlogs(currentPage, selectedCategory === 'All' ? '' : selectedCategory, searchTerm);
-    }, [currentPage, selectedCategory, searchTerm]);
+    }, [currentPage, selectedCategory, searchTerm, fetchBlogs]);
 
     const handleSearch = (e) => {
         e.preventDefault();

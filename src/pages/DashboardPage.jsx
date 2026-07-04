@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useBlog } from '../context/BlogContext';
-import BlogCard from '../components/blog/BlogCard';
+// import BlogCard from '../components/blog/BlogCard';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { FiPlusCircle, FiEdit2, FiTrash2, FiEye, FiHeart } from 'react-icons/fi';
 import axios from 'axios';
@@ -20,11 +20,18 @@ const DashboardPage = () => {
         totalComments: 0,
     });
 
+    // useEffect(() => {
+    //     fetchMyBlogs();
+    // }, []);
     useEffect(() => {
+    if (user?._id) {
         fetchMyBlogs();
-    }, []);
+    }
+}, [fetchMyBlogs,user]);
 
-    const fetchMyBlogs = async () => {
+
+
+    const fetchMyBlogs = useCallback(async () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_API_URL}/blogs?author=${user._id}`);
             setMyBlogs(response.data.blogs);
@@ -45,7 +52,7 @@ const DashboardPage = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [user]);
 
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this blog?')) {
@@ -59,78 +66,6 @@ const DashboardPage = () => {
     if (loading) return <LoadingSpinner />;
 
     return (
-        // <div className="dashboard-page fade-in">
-        //     <div className="dashboard-header">
-        //         <h1>Dashboard</h1>
-        //         <Link to="/create" className="btn btn-primary">
-        //             <FiPlusCircle /> Create New Blog
-        //         </Link>
-        //     </div>
-
-        //     {/* Stats Cards */}
-        //     <div className="stats-grid">
-        //         <div className="stat-card">
-        //             <h3>Total Blogs</h3>
-        //             <p className="stat-number">{stats.totalBlogs}</p>
-        //         </div>
-        //         <div className="stat-card">
-        //             <h3>Total Views</h3>
-        //             <p className="stat-number">{stats.totalViews}</p>
-        //         </div>
-        //         <div className="stat-card">
-        //             <h3>Total Likes</h3>
-        //             <p className="stat-number">{stats.totalLikes}</p>
-        //         </div>
-        //     </div>
-
-        //     {/* My Blogs */}
-        //     <div className="my-blogs-section">
-        //         <h2>My Blogs</h2>
-        //         {myBlogs.length === 0 ? (
-        //             <div className="empty-state">
-        //                 <p>You haven't created any blogs yet.</p>
-        //                 <Link to="/create" className="btn btn-primary">Create Your First Blog</Link>
-        //             </div>
-        //         ) : (
-        //             <div className="blogs-table">
-        //                 <table>
-        //                     <thead>
-        //                         <tr>
-        //                             <th>Title</th>
-        //                             <th>Category</th>
-        //                             <th>Views</th>
-        //                             <th>Likes</th>
-        //                             <th>Date</th>
-        //                             <th>Actions</th>
-        //                         </tr>
-        //                     </thead>
-        //                     <tbody>
-        //                         {myBlogs.map(blog => (
-        //                             <tr key={blog._id}>
-        //                                 <td>{blog.title}</td>
-        //                                 <td>{blog.category}</td>
-        //                                 <td>{blog.views || 0}</td>
-        //                                 <td>{blog.likes?.length || 0}</td>
-        //                                 <td>{new Date(blog.createdAt).toLocaleDateString()}</td>
-        //                                 <td className="table-actions">
-        //                                     <Link to={`/blog/${blog._id}`} className="action-icon">
-        //                                         <FiEye />
-        //                                     </Link>
-        //                                     <Link to={`/edit/${blog._id}`} className="action-icon">
-        //                                         <FiEdit2 />
-        //                                     </Link>
-        //                                     <button onClick={() => handleDelete(blog._id)} className="action-icon delete">
-        //                                         <FiTrash2 />
-        //                                     </button>
-        //                                 </td>
-        //                             </tr>
-        //                         ))}
-        //                     </tbody>
-        //                 </table>
-        //             </div>
-        //         )}
-        //     </div>
-        // </div>
 
         <div className="dashboard-page fade-in">
 
@@ -219,80 +154,6 @@ const DashboardPage = () => {
             </div>
 
         ) : (
-
-            // <div className="modern-table-wrapper">
-
-            //     <table className="modern-table">
-
-            //         <thead>
-            //             <tr>
-            //                 <th>Title</th>
-            //                 <th>Category</th>
-            //                 <th>Views</th>
-            //                 <th>Likes</th>
-            //                 <th>Date</th>
-            //                 <th>Actions</th>
-            //             </tr>
-            //         </thead>
-
-            //         <tbody>
-
-            //             {myBlogs.map(blog => (
-
-            //                 <tr key={blog._id}>
-
-            //                     <td className="blog-title-cell">
-            //                         {blog.title}
-            //                     </td>
-
-            //                     <td>
-            //                         <span className="category-badge">
-            //                             {blog.category}
-            //                         </span>
-            //                     </td>
-
-            //                     <td>{blog.views || 0}</td>
-
-            //                     <td>{blog.likes?.length || 0}</td>
-
-            //                     <td>
-            //                         {new Date(blog.createdAt).toLocaleDateString()}
-            //                     </td>
-
-            //                     <td className="table-actions">
-
-            //                         <Link
-            //                             to={`/blog/${blog._id}`}
-            //                             className="table-action-btn"
-            //                         >
-            //                             <FiEye />
-            //                         </Link>
-
-            //                         <Link
-            //                             to={`/edit/${blog._id}`}
-            //                             className="table-action-btn"
-            //                         >
-            //                             <FiEdit2 />
-            //                         </Link>
-
-            //                         <button
-            //                             onClick={() => handleDelete(blog._id)}
-            //                             className="table-action-btn delete"
-            //                         >
-            //                             <FiTrash2 />
-            //                         </button>
-
-            //                     </td>
-
-            //                 </tr>
-
-            //             ))}
-
-            //         </tbody>
-
-            //     </table>
-
-            // </div>
             <div className="dashboard-blog-list">
 
     {myBlogs.map(blog => (

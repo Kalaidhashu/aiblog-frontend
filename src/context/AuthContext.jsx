@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect, useCallback} from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -17,16 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-  useEffect(() => {
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      fetchUserProfile();
-    } else {
-      setLoading(false);
-    }
-  }, [token]);
-
-  const fetchUserProfile = async () => {
+    const fetchUserProfile = useCallback(async () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/auth/profile`);
       setUser(response.data);
@@ -36,7 +27,18 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+  
+  useEffect(() => {
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      fetchUserProfile();
+    } else {
+      setLoading(false);
+    }
+  }, [token, fetchUserProfile]);
+
+
 
   const login = async (email, password) => {
     try {

@@ -14,7 +14,7 @@ const HomePage = () => {
     useEffect(() => {
         fetchBlogs(1, '', '');
         fetchTrendingBlogs();
-    }, []);
+    }, [fetchBlogs]);
 
     const fetchTrendingBlogs = async () => {
         try {
