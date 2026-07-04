@@ -85,7 +85,7 @@ export const BlogProvider = ({ children }) => {
       toast.error(error.response?.data?.message || 'Failed to update blog');
       return null;
     }
-  }, []);
+  }, [token]);
 
   const deleteBlog = useCallback(async (id) => {
     try {
@@ -98,7 +98,7 @@ export const BlogProvider = ({ children }) => {
       toast.error(error.response?.data?.message || 'Failed to delete blog');
       return false;
     }
-  }, []);
+  }, [token]);
 
   const likeBlog = useCallback(async (id) => {
     try {
@@ -110,7 +110,7 @@ export const BlogProvider = ({ children }) => {
       console.error('Failed to like blog:', error);
       return null;
     }
-  }, []);
+  }, [token]);
 
   const toggleFavorite = useCallback(async (id) => {
     try {
@@ -122,7 +122,7 @@ export const BlogProvider = ({ children }) => {
       console.error('Failed to toggle favorite:', error);
       return null;
     }
-  }, []);
+  }, [token]);
 
   const value = {
     blogs,
