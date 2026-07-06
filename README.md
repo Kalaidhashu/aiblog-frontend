@@ -1,14 +1,14 @@
-🤖 AI Blog Platform - Frontend
+## 🤖 AI Blog Platform - Frontend
 
 A modern AI-powered blogging platform built with React.js that enables users to create, edit, and manage blogs with AI assistance.
 
-🚀 Live Demo
+## 🚀 Live Demo
 
 Frontend: https://aiblog-frontend-beta.vercel.app
 
 ---
 
-✨ Features
+## ✨ Features
 
 - 🔐 User Authentication (Login/Register)
 - 📝 Create, Edit & Delete Blogs
@@ -25,7 +25,7 @@ Frontend: https://aiblog-frontend-beta.vercel.app
 
 ---
 
-🛠 Tech Stack
+## 🛠 Tech Stack
 
 - React.js
 - React Router DOM
@@ -76,8 +76,10 @@ Frontend is deployed using **Vercel**
 
 - Home Page
 <img width="1896" height="901" alt="image" src="https://github.com/user-attachments/assets/7f8b9230-0f01-4411-af60-43780d7a73b5" />
+
 - Dashboard
 <img width="1897" height="904" alt="image" src="https://github.com/user-attachments/assets/b9075d5e-22ea-4f4d-9d5c-0c7c76aa8576" />
+
 - Blog Editor
 <img width="1893" height="900" alt="image" src="https://github.com/user-attachments/assets/2e6ea1dc-2787-4944-a9b1-b6e0c70f307e" />
 <img width="1900" height="908" alt="image" src="https://github.com/user-attachments/assets/1a716e1e-6580-4c5e-b878-6b8c24b766f6" />
